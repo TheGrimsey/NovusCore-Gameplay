@@ -9,8 +9,6 @@ struct Transform : NetworkComponent
     vec3 rotation  = vec3(0.f, 0.f, 0.f);
     vec3 scale     = vec3(1.f, 1.f, 1.f);
 
-    f32 yawOffset = 0.0f;
-
     // Roll, Pitch, Yaw
     vec3 GetEulerAngles() const { return rotation; }
     quaternion GetQuaternion() const { return glm::quat(glm::radians(rotation)); }

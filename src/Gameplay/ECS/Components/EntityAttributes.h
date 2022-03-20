@@ -6,13 +6,15 @@
 enum class EntityAttributeType : u8
 {
     INVALID,
-    HEALTH,
-    MANA,
-    ENERGY,
-    RAGE,
-    FOCUS,
-    RUNICPOWER,
-    
+
+    STRENGTH,
+    AGILITY,
+    INTELLECT,
+
+    STAMINA,
+    SPIRIT,
+    ARMOR,
+
     COUNT
 };
 

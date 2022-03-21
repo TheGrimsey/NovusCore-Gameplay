@@ -27,4 +27,9 @@ struct EntityTarget : NetworkComponent
 
         return !didFail;
     }
+
+    static constexpr size_t GetPacketSize() 
+    { 
+        return sizeof(entt::entity); 
+    };
 };

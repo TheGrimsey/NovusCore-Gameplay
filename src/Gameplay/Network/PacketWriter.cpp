@@ -8,6 +8,7 @@
 #include <Gameplay/ECS/Components/EntityResources.h>
 #include <Gameplay/ECS/Components/EntityAttributes.h>
 #include <Gameplay/ECS/Components/EntityRatings.h>
+#include <Gameplay/ECS/Components/EntityTarget.h>
 
 bool PacketWriter::SMSG_CREATE_PLAYER(std::shared_ptr<Bytebuffer>& buffer, entt::entity entity, const GameEntity& gameEntity, const Transform& transform)
 {
@@ -132,6 +133,20 @@ bool PacketWriter::SMSG_ENTITY_RATINGS_UPDATE(std::shared_ptr<Bytebuffer>& buffe
 
     didFail |= !buffer->Put(entity);
     didFail |= !buffer->Serialize(ratings);
+
+    return !didFail;
+}
+
+bool PacketWriter::MSG_ENTITY_TARGET_UPDATE(std::shared_ptr<Bytebuffer>& buffer, entt::entity entity, const EntityTarget& target)
+{
+    bool didFail = false;
+
+    constexpr size_t packetHeaderSize = sizeof(Opcode) + sizeof(u16);
+    constexpr size_t packetPayloadSize = sizeof(entt::entity) + EntityTarget::GetPacketSize();
+
+    buffer = Bytebuffer::Borrow<packetHeaderSize + packetPayloadSize>();
+
+    didFail |= !buffer->Serialize(target);
 
     return !didFail;
 }

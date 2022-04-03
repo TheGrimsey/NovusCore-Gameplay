@@ -14,7 +14,6 @@ enum class EntityRatingType : u8
     MELEE_HIT_CHANCE,
     SPELL_HIT_CHANCE,
     HIT_CHANCE,
-
     
     COUNT
 };
@@ -22,7 +21,7 @@ enum class EntityRatingType : u8
 struct EntityRatings: NetworkComponent
 {
     static constexpr u8 RatingsCount = static_cast<u8>(EntityRatingType::COUNT);
-    f16 ratings[RatingsCount] = { f16(0.0f) };
+    f16 current[RatingsCount] = { f16(0.0f) };
 
     static constexpr size_t GetPacketSize()
     {
@@ -35,7 +34,7 @@ struct EntityRatings: NetworkComponent
         bool didFail = false;
 
         constexpr size_t RatingsArraySize = GetPacketSize();
-        didFail |= !buffer->PutBytes(reinterpret_cast<const u8*>(&ratings[0]), RatingsArraySize);
+        didFail |= !buffer->PutBytes(reinterpret_cast<const u8*>(&current[0]), RatingsArraySize);
 
         return !didFail;
     }
@@ -45,7 +44,7 @@ struct EntityRatings: NetworkComponent
         bool didFail = false;
 
         constexpr size_t RatingsArraySize = GetPacketSize();
-        didFail |= !buffer->GetBytes(reinterpret_cast<u8*>(&ratings[0]), RatingsArraySize);
+        didFail |= !buffer->GetBytes(reinterpret_cast<u8*>(&current[0]), RatingsArraySize);
 
         return !didFail;
     }
